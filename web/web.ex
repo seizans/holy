@@ -1,33 +1,9 @@
 defmodule Holy.Web do
-  @moduledoc """
-  A module that keeps using definitions for controllers,
-  views and so on.
-
-  This can be used in your application as:
-
-      use Holy.Web, :controller
-      use Holy.Web, :view
-
-  The definitions below will be executed for every view,
-  controller, etc, so keep them short and clean, focused
-  on imports, uses and aliases.
-
-  Do NOT define functions inside the quoted expressions
-  below.
-  """
-
-  def model do
-    quote do
-      # Define common model functionality
-    end
-  end
-
   def controller do
     quote do
       use Phoenix.Controller
 
       import Holy.Router.Helpers
-      import Holy.Gettext
     end
   end
 
@@ -43,7 +19,6 @@ defmodule Holy.Web do
 
       import Holy.Router.Helpers
       import Holy.ErrorHelpers
-      import Holy.Gettext
     end
   end
 
@@ -56,13 +31,9 @@ defmodule Holy.Web do
   def channel do
     quote do
       use Phoenix.Channel
-      import Holy.Gettext
     end
   end
 
-  @doc """
-  When used, dispatch to the appropriate controller/view/etc.
-  """
   defmacro __using__(which) when is_atom(which) do
     apply(__MODULE__, which, [])
   end
