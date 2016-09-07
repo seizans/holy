@@ -19,8 +19,9 @@ defmodule Holy.Router do
     get "/", PageController, :index
   end
 
-  # Other scopes may use custom stacks.
-  # scope "/api", Holy do
-  #   pipe_through :api
-  # end
+  scope "/api", Holy do
+    pipe_through :api
+
+    post "/join", BattleController, :join
+  end
 end
