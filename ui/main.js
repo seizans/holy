@@ -25,6 +25,18 @@ let join = (user_id) => {
 let App = {
     init() {
         if(!true){ return }
+
+        let user_id = 1;
+        let socket = new Socket("/socket", {
+            params: {user_id: user_id}
+        });
+        socket.connect();
+        let room_id = 3;
+        this.channel = socket.channel("room:" + room_id);
+        this.channel.join()
+            .receive('ok', ({data}) => {console.log('ok')})
+            .receive('error', resp => {console.log('join failed!', resp)})
+
         this.connectButton = document.getElementById("connect-button");
         this.userIdContainer = document.getElementById("user-id");
         this.hpsContainer = document.getElementById("hps");
