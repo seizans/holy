@@ -1,4 +1,4 @@
-//import {Socket, Presence} from "./phoenix";
+import {Socket, Presence} from "./phoenix";
 
 let App = {
   init(){
