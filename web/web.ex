@@ -18,7 +18,6 @@ defmodule Holy.Web do
       use Phoenix.HTML
 
       import Holy.Router.Helpers
-      import Holy.ErrorHelpers
     end
   end
 
