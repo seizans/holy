@@ -25,8 +25,12 @@ let join = (user_id) => {
 let App = {
     init() {
         if(!true){ return }
-        this.connectButton = document.getElementById("connect-button")
-        this.bind()
+        this.connectButton = document.getElementById("connect-button");
+        this.userIdContainer = document.getElementById("user-id");
+        this.hpsContainer = document.getElementById("hps");
+        this.attackButton = document.getElementById("attack-button");
+        this.render_hps();
+        this.bind();
     },
 
     bind() {
@@ -37,10 +41,27 @@ let App = {
                     alert('error');
                     return;
                 }
-                console.log(json_or_error.user_id);
+                this.userIdContainer.innerHTML = 'UserID: ' + json_or_error.user_id;
                 return;
             });
-        })
+        });
+
+        this.attackButton.addEventListener("click", e => {
+            // ws で送る
+            console.log("attacked");
+        });
+    },
+
+    render_hps() {
+        let hps = [
+            {name: 'enemy', value: 100},
+            {name: 'ally1', value: 20},
+            {name: 'ally2', value: 15},
+            {name: 'ally3', value: 30},
+        ]
+        this.hpsContainer.innerHTML = hps.map(hp => {
+            return `<br />${hp.name}: ${hp.value}`;
+        }).join("");
     },
 
 }

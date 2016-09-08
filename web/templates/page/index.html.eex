@@ -1,5 +1,7 @@
 <div class="jumbotron">
   <h2>Welcome!</h2>
   <input type="button" id="connect-button" value="CONNECT" />
-  <p class="lead">A productive web framework that<br />does not compromise speed and maintainability.</p>
+  <div id="user-id">User ID</div>
+  <div id="hps"></div>
+  <input type="button" id="attack-button" value="ATTACK" />
 </div>
