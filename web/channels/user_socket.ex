@@ -4,11 +4,14 @@ defmodule Holy.UserSocket do
   channel "room:*", Holy.RoomChannel
   transport :websocket, Phoenix.Transports.WebSocket
 
-  def connect(%{"user_id" => "3"} = _params, socket) do
-    :error
-  end
-  def connect(%{"user_id" => user_id} = _params, socket) do
-    {:ok, assign(socket, :user_id, user_id)}
+  def connect(%{"token" => token} = _params, socket) do
+    case Phoenix.Token.verify(Holy.Endpoint, "this is salt", token) do
+      {:ok, user_id} ->
+        {:ok, assign(socket, :user_id, user_id)}
+      {:error, _invalid} ->
+        IO.inspect _invalid
+        :error
+    end
   end
 
   # Socket id's are topics that allow you to identify all sockets for a given user:
