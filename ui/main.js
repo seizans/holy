@@ -2,6 +2,26 @@ import 'whatwg-fetch';
 import {Socket, Presence} from "./phoenix";
 
 
+let create = (user_id) => {
+    const data = new FormData();
+    data.append('user_id', user_id);
+
+    return fetch('/api/create', {
+        method: 'POST',
+        body: data
+    }).then((response) => {
+        if (response.status !== 201) {
+            const error = new Error(response.statusText);
+            error.response = response;
+            throw error;
+        }
+        return response.json();
+    }).catch((error) => {
+        console.log(error);
+        return error;
+    });
+}
+
 let join = (user_id) => {
     const data = new FormData();
     data.append('user_id', user_id);
@@ -29,6 +49,7 @@ let App = {
         this.connectButton = document.getElementById("connect-button");
         this.userIdContainer = document.getElementById("user-id");
         this.hpsContainer = document.getElementById("hps");
+        this.createButton = document.getElementById("create-button");
         this.attackButton = document.getElementById("attack-button");
         this.render_hps();
         this.bind();
@@ -55,6 +76,18 @@ let App = {
                     .receive('ok', ({data}) => {console.log('ok')})
                     .receive('error', resp => {console.log('join failed!', resp)})
 
+                return;
+            });
+        });
+
+        this.createButton.addEventListener("click", e => {
+            create(1).then((json_or_error) =>{
+                if (json_or_error.response) {
+                    console.log(json_or_error);
+                    alert('error');
+                    return;
+                }
+                console.log("CREATE SUCCESS");
                 return;
             });
         });

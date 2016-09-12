@@ -18,6 +18,7 @@ defmodule Holy.Router do
   scope "/api", Holy do
     pipe_through :api
 
+    post "/create", BattleController, :create
     post "/join", BattleController, :join
   end
 end

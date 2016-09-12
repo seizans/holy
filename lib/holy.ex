@@ -5,6 +5,7 @@ defmodule Holy do
     import Supervisor.Spec
     children = [
       supervisor(Holy.Endpoint, []),
+      supervisor(Holy.RoomSupervisor, []),
     ]
     opts = [strategy: :one_for_one, name: Holy.Supervisor]
     Supervisor.start_link(children, opts)
