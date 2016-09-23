@@ -27,5 +27,11 @@ defmodule Holy.Endpoint do
 
   plug Plug.Head
 
+  plug Plug.Session,
+    store: :cookie,
+    key: "_holy_key",
+    signing_salt: "PHwts+Fj"
+
+
   plug Holy.Router
 end

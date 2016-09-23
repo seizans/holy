@@ -3,6 +3,7 @@ defmodule Holy.Router do
 
   pipeline :browser do
     plug :accepts, ["html"]
+    plug :fetch_session
   end
 
   pipeline :api do
@@ -13,6 +14,7 @@ defmodule Holy.Router do
     pipe_through :browser # Use the default browser stack
 
     get "/", PageController, :index
+    post "/signin", PageController, :signin
   end
 
   scope "/api", Holy do
