@@ -1,7 +1,16 @@
+import React from 'react';
+import ReactDOM from 'react-dom';
 import 'whatwg-fetch';
 
+const App = () => {
+    console.log("Start Rendering");
+    return (<div>
+        <input id='user-id' />
+        <button onClick={(ev) => {signin(document.getElementById('user-id').value)}}>Enjoy!!</button>
+    </div>);
+};
 
-let signin = (user_id) => {
+const signin = (user_id) => {
     const data = new FormData();
     data.append('user_id', user_id);
     return fetch('/api/signin', {
@@ -14,32 +23,11 @@ let signin = (user_id) => {
             error.response = response;
             throw error;
         }
-        return response.json();
+        location.href = '/index.html';
     }).catch((error) => {
         console.log(error);
         return error;
     });
 };
 
-let App = {
-    init() {
-        this.submitButton = document.getElementById("submit-button");
-        this.userIdInput = document.getElementById("user-id");
-        this.bind();
-    },
-
-    bind() {
-        this.submitButton.addEventListener("click", e => {
-            alert(this.userIdInput.value);
-            signin(this.userIdInput.value).then((json_or_error) =>{
-                if (json_or_error.response) {
-                    console.log(json_or_error);
-                    alert('error');
-                }
-                location.href = '/index.html';
-            });
-        });
-    },
-};
-
-App.init();
+ReactDOM.render(<App />, document.getElementById("main"));
