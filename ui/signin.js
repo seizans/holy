@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import 'whatwg-fetch';
 
 const App = () => {
-    console.log("Start Rendering");
+    console.log('Start Rendering');
     return (<div>
         <input id='user-id' />
         <button onClick={(ev) => {signin(document.getElementById('user-id').value)}}>Enjoy!!</button>
@@ -30,4 +30,4 @@ const signin = (user_id) => {
     });
 };
 
-ReactDOM.render(<App />, document.getElementById("main"));
+ReactDOM.render(<App />, document.getElementById('main'));
