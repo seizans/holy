@@ -35,7 +35,8 @@ defmodule Holy.AuthController do
     token = Phoenix.Token.sign(conn, @token_salt, user_id)
     conn
     |> put_resp_cookie("token", token)
-    |> send_resp(204, "")
+    |> put_status(204)
+    |> json(%{})
   end
   def signin(conn, _params) do
     IO.inspect _params
