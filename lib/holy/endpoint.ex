@@ -9,7 +9,7 @@ defmodule Holy.Endpoint do
   # when deploying your static files in production.
   plug Plug.Static,
     at: "/", from: :holy, gzip: false,
-    only: ~w(css fonts images js favicon.ico robots.txt)
+    only: ~w(index.html signin.html css fonts images js favicon.ico robots.txt)
 
   if code_reloading? do
     socket "/phoenix/live_reload/socket", Phoenix.LiveReloader.Socket
@@ -26,12 +26,6 @@ defmodule Holy.Endpoint do
     json_decoder: Poison
 
   plug Plug.Head
-
-  plug Plug.Session,
-    store: :cookie,
-    key: "_holy_key",
-    signing_salt: "PHwts+Fj"
-
 
   plug Holy.Router
 end
