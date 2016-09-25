@@ -2,12 +2,18 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import 'whatwg-fetch';
 
-const App = () => {
-    console.log('Start Rendering');
-    return (<div>
-        <input id='user-id' />
-        <button onClick={(ev) => {signin(document.getElementById('user-id').value)}}>Enjoy!!</button>
-    </div>);
+class App extends React.Component {
+    onClickRequest(ev) {
+        signin(ReactDOM.findDOMNode(this.refs.userId));
+    }
+
+    render() {
+        console.log('Start Rendering');
+        return (<div>
+            <input ref='userId' />
+            <button onClick={this.onClickRequest.bind(this)}>Enjoy!!</button>
+        </div>);
+    }
 };
 
 const signin = (user_id) => {
