@@ -4,7 +4,7 @@ import 'whatwg-fetch';
 
 class App extends React.Component {
     onClickRequest(ev) {
-        signin(ReactDOM.findDOMNode(this.refs.userId));
+        signin(this.refs.userId);
     }
 
     render() {
