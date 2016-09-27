@@ -1,11 +1,11 @@
+import axios from 'axios';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import 'whatwg-fetch';
 import {Socket, Presence} from "./phoenix";
 
 // TODO(seizans): 初期読み込み時に me API を叩いて認証チェックする。cookie 無いか認証失敗で signin.html へ。
 const App = () => {
-    const hps = [
+    const initialHps = [
         {name: 'enemy', value: 100},
         {name: 'ally1', value: 20},
         {name: 'ally2', value: 15},
@@ -16,7 +16,7 @@ const App = () => {
         <CreateButton />
         <ConnectButton />
         <UserIdContainer />
-        <HpsContainer hps={hps} />
+        <HpsContainer hps={initialHps} />
         <AttackButton />
     </div>)
 }
@@ -28,22 +28,16 @@ class UserIdContainer extends React.Component {
     }
 }
 
-class Hp extends React.Component {
-    render() {
-        const name = this.props.hp.name;
-        const hp = this.props.hp.value;
-        return <li>{name}: {hp}</li>
-    }
+const Hp = (props) => {
+    return <li>{props.hp.name}: {props.hp.value}</li>
 }
 
-class HpsContainer extends React.Component {
-    render() {
-        return (<ul>{
-            this.props.hps.map((hp) => {
-                return <Hp key={hp.name} hp={hp} />
-            })
-        }</ul>)
-    }
+const HpsContainer = (props) => {
+    return (<ul>{
+        props.hps.map((hp) => {
+            return <Hp key={hp.name} hp={hp} />
+        })
+    }</ul>)
 }
 
 class CreateButton extends React.Component {
@@ -102,43 +96,35 @@ class AttackButton extends React.Component {
 }
 
 const create = (user_id) => {
-    const data = new FormData();
-    data.append('user_id', user_id);
-
-    return fetch('/api/create', {
-        method: 'POST',
-        body: data
-    }).then((response) => {
-        if (response.status !== 201) {
-            const error = new Error(response.statusText);
-            error.response = response;
-            throw error;
-        }
-        return response.json();
-    }).catch((error) => {
-        console.log(error);
-        return error;
-    });
+    return axios.post('/api/create', {user_id: user_id})
+        .then((response) => {
+            if (response.status !== 201) {
+                const error = new Error(response.statusText);
+                error.response = response;
+                return Promise.reject(error);
+            }
+            return response.json();
+        })
+        .catch((error) => {
+            console.log(error);
+            return error;
+        });
 }
 
-let join = (user_id) => {
-    const data = new FormData();
-    data.append('user_id', user_id);
-
-    return fetch('/api/join', {
-        method: 'POST',
-        body: data
-    }).then((response) => {
-        if (response.status !== 200) {
-            const error = new Error(response.statusText);
-            error.response = response;
-            throw error;
-        }
-        return response.json();
-    }).catch((error) => {
-        console.log(error);
-        return error;
-    });
+const join = (user_id) => {
+    return axios.post('/api/join', {user_id: user_id})
+        .then((response) => {
+            if (response.status !== 200) {
+                const error = new Error(response.statusText);
+                error.response = response;
+                return Promise.reject(error);
+            }
+            return response.json();
+        })
+        .catch((error) => {
+            console.log(error);
+            return error;
+        });
 }
 
 ReactDOM.render(<App />, document.querySelector(".jumbotron"))

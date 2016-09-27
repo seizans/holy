@@ -17,7 +17,6 @@ class App extends React.Component {
 };
 
 const signin = (user_id) => {
-    console.log(user_id);
     return axios.post('/api/signin', {user_id: user_id}, {credentials: 'include'})
         .then((response) => {
             if (response.status !== 204) {
