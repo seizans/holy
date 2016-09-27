@@ -1,6 +1,6 @@
-import axios from 'axios';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {post} from './misc';
 
 class App extends React.Component {
     onClickRequest(ev) {
@@ -17,18 +17,12 @@ class App extends React.Component {
 };
 
 const signin = (user_id) => {
-    return axios.post('/api/signin', {user_id: user_id}, {credentials: 'include'})
-        .then((response) => {
-            if (response.status !== 204) {
-                const error = new Error(response.statusText);
-                return Promise.reject(error);
-            }
-            location.href = '/index.html';
-        })
-        .catch((error) => {
-            console.log(error);
-            return error;
-        });
-};
+    const json_or_error = post('/api/signin', {user_id: user_id}, {credentials: 'include'});
+    if (json_or_error.response) {
+        console.log(json_or_error);
+        return;
+    }
+    location.href = '/index.html';
+}
 
 ReactDOM.render(<App />, document.getElementById('main'));

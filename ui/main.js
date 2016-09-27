@@ -1,7 +1,7 @@
-import axios from 'axios';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {Socket, Presence} from "./phoenix";
+import {post} from './misc'
+import {Socket, Presence} from './phoenix';
 
 // TODO(seizans): 初期読み込み時に me API を叩いて認証チェックする。cookie 無いか認証失敗で signin.html へ。
 const App = () => {
@@ -96,35 +96,11 @@ class AttackButton extends React.Component {
 }
 
 const create = (user_id) => {
-    return axios.post('/api/create', {user_id: user_id})
-        .then((response) => {
-            if (response.status !== 201) {
-                const error = new Error(response.statusText);
-                error.response = response;
-                return Promise.reject(error);
-            }
-            return response.json();
-        })
-        .catch((error) => {
-            console.log(error);
-            return error;
-        });
+    return post('/api/create', {user_id: user_id});
 }
 
 const join = (user_id) => {
-    return axios.post('/api/join', {user_id: user_id})
-        .then((response) => {
-            if (response.status !== 200) {
-                const error = new Error(response.statusText);
-                error.response = response;
-                return Promise.reject(error);
-            }
-            return response.json();
-        })
-        .catch((error) => {
-            console.log(error);
-            return error;
-        });
+    return post('/api/join', {user_id: user_id});
 }
 
 ReactDOM.render(<App />, document.querySelector(".jumbotron"))
