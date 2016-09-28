@@ -9,8 +9,7 @@ defmodule Holy.BattleController do
   {:error, {:already_started, child} | :already_present | term}
   """
   def create(conn, _params) do
-    # TODO(seizans): room_id の生成を精査する
-    room_id = "005"
+    room_id = UUID.uuid4()
     case Supervisor.start_child(Holy.RoomSupervisor, [room_id]) do
       {:ok, pid} ->
         IO.inspect(pid)
