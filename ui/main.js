@@ -28,13 +28,13 @@ class UserIdContainer extends React.Component {
     }
 }
 
-const Hp = (props) => {
-    return <li>{props.hp.name}: {props.hp.value}</li>
+const Hp = ({hp}) => {
+    return <li>{hp.name}: {hp.value}</li>
 }
 
-const HpsContainer = (props) => {
+const HpsContainer = ({hps}) => {
     return (<ul>{
-        props.hps.map((hp) => {
+        hps.map((hp) => {
             return <Hp key={hp.name} hp={hp} />
         })
     }</ul>)
