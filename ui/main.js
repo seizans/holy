@@ -45,13 +45,14 @@ class CreateButton extends React.Component {
         create(1).then((json_or_error) => {
             if (json_or_error.response) {
                 console.log(json_or_error);
-                alert('error');
                 return;
             }
-            console.log("CREATE SUCCESS");
+            console.log("CREATE SUCCESS: " + json_or_error.room_id);
+            // TODO(seizans): ここで何かに state として今参加中の room_id を入れる
             return;
         });
     }
+
     render() {
         return <input type='button' value='Create Room' onClick={this.onClick} />
     }
@@ -80,6 +81,7 @@ class ConnectButton extends React.Component {
                 .receive('error', resp => {console.log('join failed!', resp)})
         });
     }
+
     render() {
         return <input type="button" value="CONNECT" onClick={this.onClick} />
     }

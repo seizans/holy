@@ -8,7 +8,7 @@ export const post = (path, data, config) => {
                 error.response = response;
                 return Promise.reject(error);
             }
-            return response.json();
+            return response.data;
         })
         .catch((error) => {
             console.log(error);
