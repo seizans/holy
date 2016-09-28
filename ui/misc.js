@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const post = (path, data, config) => {
+export const post = (path, data, config) => {
     return axios.post(path, data, config)
         .then((response) => {
             if (Math.floor(response.status / 100) !== 2) {
@@ -15,5 +15,3 @@ const post = (path, data, config) => {
             return error;
         });
 }
-
-export {post}
