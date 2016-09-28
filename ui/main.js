@@ -4,21 +4,29 @@ import {post} from './misc'
 import {Socket, Presence} from './phoenix';
 
 // TODO(seizans): 初期読み込み時に me API を叩いて認証チェックする。cookie 無いか認証失敗で signin.html へ。
-const App = () => {
-    const initialHps = [
-        {name: 'enemy', value: 100},
-        {name: 'ally1', value: 20},
-        {name: 'ally2', value: 15},
-        {name: 'ally3', value: 30},
-    ]
-    return (<div>
-        <h2>Welcome!!</h2>
-        <CreateButton />
-        <ConnectButton />
-        <UserIdContainer />
-        <HpsContainer hps={initialHps} />
-        <AttackButton />
-    </div>)
+class App extends React.Component {
+    constructor(...args) {
+        super(...args);
+        this.state = {
+            hps: [
+                {name: 'enemy', value: 100},
+                {name: 'ally1', value: 20},
+                {name: 'ally2', value: 15},
+                {name: 'ally3', value: 30},
+            ]
+        };
+    }
+
+    render() {
+        return (<div>
+            <h2>Welcome!!</h2>
+            <CreateButton />
+            <ConnectButton />
+            <UserIdContainer />
+            <HpsContainer hps={this.state.hps} />
+            <AttackButton />
+        </div>)
+    }
 }
 
 class UserIdContainer extends React.Component {
