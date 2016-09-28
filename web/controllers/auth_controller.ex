@@ -11,7 +11,8 @@ defmodule Holy.AuthController do
       token ->
         case Phoenix.Token.verify(conn, @token_salt, token) do
           {:ok, user_id} ->
-            {:ok, user_id}
+            {:ok, %{user_id: user_id,
+                    token: token}}
           {:error, invalid} ->
             {:error, invalid}
         end
@@ -20,9 +21,9 @@ defmodule Holy.AuthController do
 
   def me(conn, _params) do
     case auth(conn) do
-      {:ok, user_id} ->
+      {:ok, user} ->
         conn
-        |> json(%{user_id: user_id})
+        |> json(user)
       {:error, _reason} ->
         conn
         |> put_status(401)

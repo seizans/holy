@@ -7,7 +7,13 @@ import {Socket, Presence} from './phoenix';
 class App extends React.Component {
     constructor(...args) {
         super(...args);
+        // TODO(seizans): 初期化時 request をコード上どこで送るべきか精査する
+        const json_or_error = post('/api/me', {});
+        // TODO(seizans): error をケアする
+        const token = json_or_error.token;
+        console.log(token);
         this.state = {
+            token: token,
             hps: [
                 {name: 'enemy', value: 100},
                 {name: 'ally1', value: 20},
